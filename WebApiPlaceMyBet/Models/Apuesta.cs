@@ -7,8 +7,9 @@ namespace WebApiPlaceMyBet.Models
 {
     public class Apuesta
     {
-        public Apuesta(string idUsuario, string idMercado, string tipoApuesta, double dineroApostado, DateTime fechaApuesta)
+        public Apuesta(int idApuesta,  string idUsuario, string idMercado, string tipoApuesta, double dineroApostado, DateTime fechaApuesta)
         {
+            IdApuesta = idApuesta;
             IdUsuario = idUsuario;
             IdMercado = idMercado;
             TipoApuesta = tipoApuesta;
@@ -16,6 +17,7 @@ namespace WebApiPlaceMyBet.Models
             FechaApuesta = fechaApuesta;
         }
 
+        public int IdApuesta { get; set; }
         public string IdUsuario { get; set; }
         public string IdMercado { get; set; }
         public string TipoApuesta { get; set; }
@@ -26,8 +28,9 @@ namespace WebApiPlaceMyBet.Models
 
     public class ApuestaDTO
     {
-        public ApuestaDTO(string idUsuario, double tipoMercado, string tipoApuesta, float cuotaUnder, float cuotaOver, double dineroApostado, DateTime fechaApuesta)
+        public ApuestaDTO(int idApuesta, string idUsuario, double tipoMercado, string tipoApuesta, float cuotaUnder, float cuotaOver, double dineroApostado, DateTime fechaApuesta)
         {
+            IdApuesta = idApuesta;
             IdUsuario = idUsuario;
             TipoMercado = tipoMercado;
             TipoApuesta = tipoApuesta;
@@ -37,6 +40,7 @@ namespace WebApiPlaceMyBet.Models
             FechaApuesta = fechaApuesta;
         }
 
+        public int IdApuesta { get; set; }
         public string IdUsuario { get; set; }
         public double TipoMercado { get; set; }
         public string TipoApuesta { get; set; }
@@ -49,8 +53,9 @@ namespace WebApiPlaceMyBet.Models
 
     public class SumaApuestas
     {
-        public SumaApuestas(String idMercado, float total, float totalOver, float totalUnder)
+        public SumaApuestas(int idApuesta, String idMercado, float total, float totalOver, float totalUnder)
         {
+            IdApuesta = idApuesta;
             IdMercado = idMercado;
             Total = total;
             TotalOver = totalOver;
@@ -58,10 +63,13 @@ namespace WebApiPlaceMyBet.Models
 
         }
 
+        public int IdApuesta { get; set; }
         public string IdMercado { get; set; }
         public float Total { get; set; }
         public float TotalOver { get; set; }
         public float TotalUnder { get; set; }
     }
+
 }
+
 
