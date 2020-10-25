@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,12 +11,20 @@ namespace WebApiPlaceMyBet.Controllers
 {
     public class UsuariosController : ApiController
     {
+
         //GET: api/Usuarios
         public IEnumerable<Usuario> Get()
         {
             var repoUsuario = new UsuarioRepository();
             List<Usuario> usuarios = repoUsuario.Retrieve();
             //List<UsuarioDTO> usuarios = repoUsuario.RetrieveDTO();
+            
+        // GET: api/Usuarios
+        public IEnumerable<UsuarioDTO> Get()
+        {
+            var repo = new UsuarioRepository();
+            //List<Usuario> usuarios = repo.Retrieve();
+            List<UsuarioDTO> usuarios = repo.RetrieveDTO();
             return usuarios;
         }
 

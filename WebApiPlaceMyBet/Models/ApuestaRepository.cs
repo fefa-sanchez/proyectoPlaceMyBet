@@ -21,7 +21,7 @@ namespace WebApiPlaceMyBet.Models
             MySqlConnection con = Connect();
             MySqlCommand command = con.CreateCommand();
             command.CommandText = "SELECT DISTINCT *  FROM apuestas;";
-
+          
             try
             {
                 con.Open();

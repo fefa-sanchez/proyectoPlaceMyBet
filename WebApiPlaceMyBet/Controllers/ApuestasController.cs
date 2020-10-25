@@ -11,11 +11,19 @@ namespace WebApiPlaceMyBet.Controllers
     public class ApuestasController : ApiController
     {
         // GET: api/Apuestas
+
         public IEnumerable<Apuesta> Get()
         {
             var repoApuesta = new ApuestaRepository();
             List<Apuesta> apuestas = repoApuesta.Retrieve();
             //List<ApuestaDTO> apuestas = repoApuesta.RetrieveDTO();
+            
+        public IEnumerable<ApuestaDTO> Get()
+        {
+            var repoApuesta = new ApuestaRepository();
+            //List<Apuesta> apuestas = repoApuesta.Retrieve();
+            List<ApuestaDTO> apuestas = repoApuesta.RetrieveDTO();
+
             return apuestas;
         }
 
@@ -28,6 +36,7 @@ namespace WebApiPlaceMyBet.Controllers
         }
 
         // POST: api/Apuestas
+
         public void Post([FromBody]Apuesta apuesta)
         {
             //Update Apuestas
@@ -55,6 +64,8 @@ namespace WebApiPlaceMyBet.Controllers
             //Update Mercado
             new MercadoRepository().UpdateCuotas(new MercadoCuotasDTO(idMercado, cuotaUnder, cuotaOver));
 
+        public void Post([FromBody]string value)
+        {
         }
 
         // PUT: api/Apuestas/5
