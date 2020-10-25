@@ -83,6 +83,40 @@ namespace WebApiPlaceMyBet.Models
 
         }
 
+        internal Mercado RetrieveEvento(string idEvento, double tipoMercado)
+        {
+
+            MySqlConnection con = Connect();
+            MySqlCommand command = con.CreateCommand();
+            command.CommandText = "select * from mercados where idEvento=@idEvento and tipoMercado=@tipoMercado";
+            command.Parameters.AddWithValue("@idEvento", idEvento);
+            command.Parameters.AddWithValue("@tipoMercado", tipoMercado);
+
+            try
+            {
+                con.Open();
+                MySqlDataReader res = command.ExecuteReader();
+
+                Mercado m = null;
+                while (res.Read())
+                {
+                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(1) + " " + res.GetDouble(2) + " " + res.GetDouble(3) + " " + res.GetDouble(4));
+                    m = new Mercado(res.GetString(0), res.GetString(1), res.GetDouble(2), res.GetDouble(3), res.GetDouble(4));
+
+                }
+
+                con.Close();
+                return m;
+            }
+
+            catch (MySqlException e)
+            {
+                Debug.WriteLine("Se ha producido un error de conexión.");
+                return null;
+            }
+
+        }
+
         internal void Save(Mercado m)
         {
             MySqlConnection con = Connect();

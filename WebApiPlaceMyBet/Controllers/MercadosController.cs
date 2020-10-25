@@ -19,6 +19,14 @@ namespace WebApiPlaceMyBet.Controllers
             return mercados;
         }
 
+        // GET: api/Mercados?idEvento=idEvento&tipoMercado=tipoMercado)
+        public Mercado GetEventos(string idEvento, double tipoMercado)
+        {
+            var repoMercado = new MercadoRepository();
+            Mercado mercados = repoMercado.RetrieveEvento(idEvento, tipoMercado);
+            return mercados;
+        }
+
         // GET: api/Mercados/5
         public Mercado Get(int id)
         {
