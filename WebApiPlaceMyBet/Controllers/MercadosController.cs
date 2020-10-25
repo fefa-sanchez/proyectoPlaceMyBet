@@ -28,6 +28,11 @@ namespace WebApiPlaceMyBet.Controllers
         }
 
         // POST: api/Mercados
+        public void Post([FromBody]Mercado mercado)
+        {
+            var repoMercado = new MercadoRepository();
+            repoMercado.Save(mercado);
+
         public void Post([FromBody]string value)
         {
         }

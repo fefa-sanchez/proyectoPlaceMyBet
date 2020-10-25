@@ -1,3 +1,5 @@
+
+﻿using System;
 ﻿using Org.BouncyCastle.Math;
 using System;
 using System.Collections.Generic;
@@ -8,42 +10,44 @@ namespace WebApiPlaceMyBet.Models
 {
     public class Usuario
     {
-        public Usuario(string usuarioId, string nombre, string apellido, int edad, string banco, BigInteger numTarjeta, double saldoActual)
+        public Usuario(string idEmail, string nombre, string apellido, int edad, string banco, long numTarjetaCredito, double saldoActual)
         {
-            UsuarioId = usuarioId;
+            IdEmail = idEmail;
             Nombre = nombre;
             Apellido = apellido;
             Edad = edad;
             Banco = banco;
-            NumTarjeta = numTarjeta;
+            NumTarjetaCredito = numTarjetaCredito;
             SaldoActual = saldoActual;
         }
 
-        public string UsuarioId { get; set; }
+        public string IdEmail { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public int Edad { get; set; }
         public string Banco { get; set; }
-        public BigInteger NumTarjeta { get; set; }
+        public long NumTarjetaCredito { get; set; }
         public double SaldoActual { get; set; }
 
     }
 
-    public class UsuarioDTO
+
+   /* public class UsuarioDTO
     {
-        public UsuarioDTO(string usuarioId, string nombre, string apellido, int edad, double saldoActual)
+        public UsuarioDTO(string idEmail, string nombre, string apellido, int edad, double saldoActual)
         {
-            UsuarioId = usuarioId;
+            IdEmail = idEmail;
             Nombre = nombre;
             Apellido = apellido;
             Edad = edad;
             SaldoActual = saldoActual;
         }
 
-        public string UsuarioId { get; set; }
+
+        public string IdEmail { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public int Edad { get; set; }
         public double SaldoActual { get; set; }
-    }
+    }*/
 }

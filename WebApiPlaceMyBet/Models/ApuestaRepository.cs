@@ -20,8 +20,8 @@ namespace WebApiPlaceMyBet.Models
 
             MySqlConnection con = Connect();
             MySqlCommand command = con.CreateCommand();
-            command.CommandText = "select * from apuestas";
-
+            command.CommandText = "SELECT DISTINCT *  FROM apuestas;";
+          
             try
             {
                 con.Open();
@@ -31,8 +31,8 @@ namespace WebApiPlaceMyBet.Models
                 List<Apuesta> apuestas = new List<Apuesta>();
                 while (res.Read())
                 {
-                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetDouble(3) + " " + res.GetDouble(4) + " " + res.GetString(5));
-                    ap = new Apuesta(res.GetString(0), res.GetString(1), res.GetString(2), res.GetDouble(3), res.GetDouble(4), res.GetString(5));
+                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetDouble(3) + " " + res.GetDateTime(4));
+                    ap = new Apuesta(res.GetString(0), res.GetString(1), res.GetString(2), res.GetDouble(3), res.GetDateTime(4));
                     apuestas.Add(ap);
 
                 }
@@ -52,7 +52,7 @@ namespace WebApiPlaceMyBet.Models
 
             MySqlConnection con = Connect();
             MySqlCommand command = con.CreateCommand();
-            command.CommandText = "select * from apuestas";
+            command.CommandText = "SELECT DISTINCT *  FROM apuestas ap INNER JOIN mercados m ON m.idMercado=ap.idMercado";
 
             try
             {
@@ -63,8 +63,8 @@ namespace WebApiPlaceMyBet.Models
                 List<ApuestaDTO> apuestas = new List<ApuestaDTO>();
                 while (res.Read())
                 {
-                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetDouble(3) + " " + res.GetDouble(4) + " " + res.GetString(5));
-                    ap = new ApuestaDTO(res.GetString(0), res.GetDouble(3), res.GetDouble(4), res.GetString(5));
+                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(6) + " " + res.GetString(1) + " " + res.GetDouble(7) + " " + res.GetString(2) + " " + res.GetFloat(8) + " " + res.GetFloat(9) + " " + res.GetDouble(3) + " " + res.GetDateTime(4));
+                    ap = new ApuestaDTO (res.GetString(0), res.GetDouble(7), res.GetString(2), res.GetFloat(8), res.GetFloat(9), res.GetDouble(3), res.GetDateTime(4));
                     apuestas.Add(ap);
 
                 }
@@ -78,6 +78,75 @@ namespace WebApiPlaceMyBet.Models
                 Debug.WriteLine("Se ha producido un error de conexión.");
                 return null;
             }
+        }
+
+        internal void Save(Apuesta ap)
+        {
+            MySqlConnection con = Connect();
+            MySqlCommand command = con.CreateCommand();
+
+            /*command.CommandText = "INSERT INTO apuestas (idUsuario, idMercado, tipoApuesta, dineroApostado, fecha) VALUES ('"
+                + ap.IdUsuario + "','" + ap.IdMercado + "','" + ap.TipoApuesta + "','" + ap.DineroApostado + "','" + ap.FechaApuesta + "')";*/
+            command.CommandText = "INSERT INTO apuestas (idUsuario, idMercado, tipoApuesta, dineroApostado, fecha) " +
+                                   "VALUES(@IdUsuario, @IdMercado, @TipoApuesta, @DineroApostado, @FechaApuesta);";
+
+            command.Parameters.AddWithValue("idUsuario", ap.IdUsuario);
+            command.Parameters.AddWithValue("idMercado", ap.IdMercado);
+            command.Parameters.AddWithValue("tipoApuesta", ap.TipoApuesta);
+            command.Parameters.AddWithValue("dineroApostado", ap.DineroApostado);
+            command.Parameters.AddWithValue("fechaApuesta", ap.FechaApuesta);
+
+            Debug.WriteLine("comando " + command.CommandText);
+
+            try
+            {
+                con.Open();
+                command.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (MySqlException e)
+            {
+                Debug.WriteLine("Se ha producido un error de conexión.");
+            }
+        }
+
+        internal SumaApuestas RetrieveSumaApuestas(string idMercado)
+        {
+
+            MySqlConnection con = Connect();
+            MySqlCommand command = con.CreateCommand();
+            command.CommandText = "SELECT idMercado, sum(dineroApostado)  as Total, " +
+                                            "sum(case When tipoApuesta = 'Over' Then dineroApostado Else 0 End) as TotalOver," +
+                                            "sum(case When tipoApuesta = 'Under' Then dineroApostado Else 0 End) as TotalUnder " +
+                                    "FROM apuestas " +
+                                    "WHERE idMercado = @idMercado " +
+                                    "GROUP by idMercado " +
+                                    "ORDER by idMercado;";
+            command.Parameters.AddWithValue("idMercado", idMercado);
+
+            try
+            {
+                con.Open();
+                MySqlDataReader res = command.ExecuteReader();
+
+                SumaApuestas sc = null;
+                //TODO: Si retorna más que uno, devuelve error?
+                while (res.Read())
+                {
+                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetFloat(1) + " " + res.GetFloat(2) + " " + res.GetFloat(3));
+                    sc = new SumaApuestas(res.GetString(0), res.GetFloat(1), res.GetFloat(2), res.GetFloat(3));
+                }
+
+                con.Close();
+                return sc;
+            }
+
+            catch (MySqlException e)
+            {
+                Debug.WriteLine("Se ha producido un error de conexión.");
+                return null;
+            }
+
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -32,8 +35,8 @@ namespace WebApiPlaceMyBet.Models
                 List<Usuario> usuarios = new List<Usuario>(); 
                 while (res.Read())
                 {
-                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetInt32(3) + " " + res.GetString(4) + " " + res.GetInt64(5) + " " + res.GetFloat(6));
-                    u = new Usuario(res.GetString(0), res.GetString(1), res.GetString(2), res.GetInt32(3), res.GetString(4), res.GetInt64(5), res.GetFloat(6));
+                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetInt32(3) + " " + res.GetString(4) + " " + res.GetInt64(5) + " " + res.GetDouble(6));
+                    u = new Usuario(res.GetString(0), res.GetString(1), res.GetString(2), res.GetInt32(3), res.GetString(4), res.GetInt64(5), res.GetDouble(6));
                     usuarios.Add(u);
 
                 }
@@ -49,7 +52,7 @@ namespace WebApiPlaceMyBet.Models
             }
         }
 
-        internal List<UsuarioDTO> RetrieveDTO()
+        /*internal List<UsuarioDTO> RetrieveDTO()
         {
 
             MySqlConnection con = Connect();
@@ -65,8 +68,8 @@ namespace WebApiPlaceMyBet.Models
                 List<UsuarioDTO> usuarios = new List<UsuarioDTO>();
                 while (res.Read())
                 {
-                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetInt32(3) + " " + res.GetString(4) + " " + res.GetInt64(5) + " " + res.GetFloat(6));
-                    u = new UsuarioDTO(res.GetString(0), res.GetString(1), res.GetString(2), res.GetInt32(3), res.GetFloat(6));
+                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetInt32(3) + " " + res.GetString(4) + " " + res.GetInt64(5) + " " + res.GetDouble(6));
+                    u = new UsuarioDTO(res.GetString(0), res.GetString(1), res.GetString(2), res.GetInt32(3), res.GetDouble(6));
                     usuarios.Add(u);
 
                 }
@@ -80,13 +83,26 @@ namespace WebApiPlaceMyBet.Models
                 Debug.WriteLine("Se ha producido un error de conexión.");
                 return null;
             }
-        }
+        }*/
+
         internal void Save(Usuario u)
-            {
+        {
             MySqlConnection con = Connect();
-            MySqlCommand command = con.CreateCommandCommand();
-            command.CommandText = "insert * from usuarios(idEmail, nombre, apellido, edad, bando, numTarjetaCredito, saldoActual) values('" + u.UsuarioId + "','" + u.Nombre + "','" + u.Apellido + "','" + u.Edad + "','" + u.Banco + "','" + u.NumTarjeta + "','" + u.SaldoActual + "')";
-            Debug.WriteLine("comando " + command.CommandText());
+            MySqlCommand command = con.CreateCommand();
+
+            command.CommandText = "INSERT INTO usuarios (idEmail, nombre, apellido, edad, banco, numTarjetaCredito, saldoActual)" +
+                "VALUES (@IdEmail, @Nombre, @Apellido, @Edad, @Banco, @NumTarjetaCredito, @SaldoActual);";
+            // + u.IdEmail + "','" + u.Nombre + "','" + u.Apellido + "','" + u.Edad + "','" + u.Banco + "','" + u.NumTarjetaCredito + "','" + u.SaldoActual.ToString().Replace(',','.') + "')";
+
+            command.Parameters.AddWithValue("idEmail", u.IdEmail);
+            command.Parameters.AddWithValue("nombre", u.Nombre);
+            command.Parameters.AddWithValue("apellido", u.Apellido);
+            command.Parameters.AddWithValue("edad", u.Edad);
+            command.Parameters.AddWithValue("banco", u.Banco);
+            command.Parameters.AddWithValue("numTarjetaCredito", u.NumTarjetaCredito);
+            command.Parameters.AddWithValue("saldoActual", u.SaldoActual);
+
+            Debug.WriteLine("comando " + command.CommandText);
 
             try
             {

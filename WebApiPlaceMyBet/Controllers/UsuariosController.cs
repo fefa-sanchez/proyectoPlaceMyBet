@@ -11,6 +11,14 @@ namespace WebApiPlaceMyBet.Controllers
 {
     public class UsuariosController : ApiController
     {
+
+        //GET: api/Usuarios
+        public IEnumerable<Usuario> Get()
+        {
+            var repoUsuario = new UsuarioRepository();
+            List<Usuario> usuarios = repoUsuario.Retrieve();
+            //List<UsuarioDTO> usuarios = repoUsuario.RetrieveDTO();
+            
         // GET: api/Usuarios
         public IEnumerable<UsuarioDTO> Get()
         {
@@ -33,7 +41,7 @@ namespace WebApiPlaceMyBet.Controllers
         // POST: api/Usuarios
         public void Post([FromBody]Usuario usuario)
         {
-            ValidationResult repoUsuario = new UsuarioRepository();
+            var repoUsuario = new UsuarioRepository();
             repoUsuario.Save(usuario);
         }
 

@@ -11,11 +11,19 @@ namespace WebApiPlaceMyBet.Controllers
     public class ApuestasController : ApiController
     {
         // GET: api/Apuestas
+
+        public IEnumerable<Apuesta> Get()
+        {
+            var repoApuesta = new ApuestaRepository();
+            List<Apuesta> apuestas = repoApuesta.Retrieve();
+            //List<ApuestaDTO> apuestas = repoApuesta.RetrieveDTO();
+            
         public IEnumerable<ApuestaDTO> Get()
         {
             var repoApuesta = new ApuestaRepository();
             //List<Apuesta> apuestas = repoApuesta.Retrieve();
             List<ApuestaDTO> apuestas = repoApuesta.RetrieveDTO();
+
             return apuestas;
         }
 
@@ -28,6 +36,34 @@ namespace WebApiPlaceMyBet.Controllers
         }
 
         // POST: api/Apuestas
+
+        public void Post([FromBody]Apuesta apuesta)
+        {
+            //Update Apuestas
+            var repoApuesta = new ApuestaRepository();
+            repoApuesta.Save(apuesta);
+
+            //Update Cuotas in the Mercado table
+            UpdateCuotas(apuesta.IdMercado);
+
+        }
+
+        private void UpdateCuotas(string idMercado)
+        {
+            //Retreive sum of the cuotas for the Mercado
+            var repoAp = new ApuestaRepository();
+            var sumaApuestas = repoAp.RetrieveSumaApuestas(idMercado);
+            
+            //Calculate Cuotas
+            var probOver = sumaApuestas.TotalOver / sumaApuestas.Total;
+            var cuotaOver = (1 / probOver) * 0.95;
+
+            var probUnder = sumaApuestas.TotalUnder / sumaApuestas.Total;
+            var cuotaUnder = (1 / probUnder) * 0.95;
+            
+            //Update Mercado
+            new MercadoRepository().UpdateCuotas(new MercadoCuotasDTO(idMercado, cuotaUnder, cuotaOver));
+
         public void Post([FromBody]string value)
         {
         }

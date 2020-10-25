@@ -7,19 +7,31 @@ namespace WebApiPlaceMyBet.Models
 {
     public class Evento
     {
-        public Evento(string idEvento, string equipoLocal, string equipoVisitante, string fechaEvento)
+        public Evento(string idEvento, string equipoLocal, string equipoVisitante, DateTime fechaEvento)
         {
-            IdEventoId = idEvento;
+            IdEvento = idEvento;
             EquipoLocal = equipoLocal;
             EquipoVisitante = equipoVisitante;
             FechaEvento = fechaEvento;
         }
 
-        public static object IdEvento { get; internal set; }
-
-        public string IdEventoId { get; set; }
+        public string IdEvento { get; set; }
         public string EquipoLocal { get; set; }
         public string EquipoVisitante { get; set; }
-        public string FechaEvento { get; set; }
+        public DateTime FechaEvento { get; set; }
+    }
+
+    public class EventoDTO
+    {
+        public EventoDTO(string equipoLocal, string equipoVisitante, DateTime fechaEvento)
+        {
+            EquipoLocal = equipoLocal;
+            EquipoVisitante = equipoVisitante;
+            FechaEvento = fechaEvento;
+        }
+
+        public string EquipoLocal { get; set; }
+        public string EquipoVisitante { get; set; }
+        public DateTime FechaEvento { get; set; }
     }
 }
