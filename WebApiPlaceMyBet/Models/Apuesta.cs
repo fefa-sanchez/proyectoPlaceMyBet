@@ -64,4 +64,3 @@ namespace WebApiPlaceMyBet.Models
         public float TotalUnder { get; set; }
     }
 }
-
