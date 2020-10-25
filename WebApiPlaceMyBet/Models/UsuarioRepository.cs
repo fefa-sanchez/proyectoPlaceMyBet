@@ -81,5 +81,23 @@ namespace WebApiPlaceMyBet.Models
                 return null;
             }
         }
+        internal void Save(Usuario u)
+            {
+            MySqlConnection con = Connect();
+            MySqlCommand command = con.CreateCommandCommand();
+            command.CommandText = "insert * from usuarios(idEmail, nombre, apellido, edad, bando, numTarjetaCredito, saldoActual) values('" + u.UsuarioId + "','" + u.Nombre + "','" + u.Apellido + "','" + u.Edad + "','" + u.Banco + "','" + u.NumTarjeta + "','" + u.SaldoActual + "')";
+            Debug.WriteLine("comando " + command.CommandText());
+
+            try
+            {
+                con.Open();
+                command.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (MySqlException e)
+            {
+                Debug.WriteLine("Se ha producido un error de conexión.");
+            }
+        }
     }
 }

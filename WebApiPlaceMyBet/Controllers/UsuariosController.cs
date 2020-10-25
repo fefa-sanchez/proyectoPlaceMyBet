@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -30,8 +31,10 @@ namespace WebApiPlaceMyBet.Controllers
         }
 
         // POST: api/Usuarios
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Usuario usuario)
         {
+            ValidationResult repoUsuario = new UsuarioRepository();
+            repoUsuario.Save(usuario);
         }
 
         // PUT: api/Usuarios/5
