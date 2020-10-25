@@ -17,7 +17,7 @@ namespace WebApiPlaceMyBet.Controllers
            // List<Evento> eventos = repoEvento.Retrieve();
             List<EventoDTO> eventos = repoEvento.RetrieveDTO();
 
-        public IEnumerable<Evento> Get()
+  public IEnumerable<Evento> Get()
         {
             var repoEvento = new EventoRepository();
             List<Evento> eventos = repoEvento.Retrieve();
@@ -33,7 +33,6 @@ namespace WebApiPlaceMyBet.Controllers
         }
 
         // POST: api/Eventos
-
         public void Post([FromBody]Evento evento)
         {
             var repoEvento = new EventoRepository();

@@ -1,4 +1,4 @@
-
+﻿using System;
 ﻿using System;
 ﻿using Org.BouncyCastle.Math;
 using System;
@@ -31,7 +31,6 @@ namespace WebApiPlaceMyBet.Models
 
     }
 
-
    /* public class UsuarioDTO
     {
         public UsuarioDTO(string idEmail, string nombre, string apellido, int edad, double saldoActual)
@@ -42,7 +41,6 @@ namespace WebApiPlaceMyBet.Models
             Edad = edad;
             SaldoActual = saldoActual;
         }
-
 
         public string IdEmail { get; set; }
         public string Nombre { get; set; }
