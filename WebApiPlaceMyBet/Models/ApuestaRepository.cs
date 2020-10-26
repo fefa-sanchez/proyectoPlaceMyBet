@@ -80,6 +80,42 @@ namespace WebApiPlaceMyBet.Models
             }
         }
 
+        internal List<Apuesta> RetrieveByEmail(string idEmail)
+        {
+
+            MySqlConnection con = Connect();
+            MySqlCommand command = con.CreateCommand();
+            command.CommandText = "SELECT DISTINCT *  FROM apuestas " +
+                                    "WHERE idUsuario = @idEmail;";
+
+            command.Parameters.AddWithValue("idEmail", @idEmail);
+
+            try
+            {
+                con.Open();
+                MySqlDataReader res = command.ExecuteReader();
+
+                Apuesta ap = null;
+                List<Apuesta> apuestas = new List<Apuesta>();
+                while (res.Read())
+                {
+                    Debug.WriteLine("Recuperado: " + res.GetInt32(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetString(3) + " " + res.GetDouble(4) + " " + res.GetDateTime(5));
+                    ap = new Apuesta(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetString(3), res.GetDouble(4), res.GetDateTime(5));
+                    apuestas.Add(ap);
+
+                }
+
+                con.Close();
+                return apuestas;
+            }
+
+            catch (MySqlException e)
+            {
+                Debug.WriteLine("Se ha producido un error de conexión.");
+                return null;
+            }
+        }
+
         internal List<ApuestaUsuario> RetrieveApuestasUsuario(string idUsuario, double tipoMercado)
         {
 

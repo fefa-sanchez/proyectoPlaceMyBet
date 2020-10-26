@@ -19,15 +19,17 @@ namespace WebApiPlaceMyBet.Controllers
             return apuestas;
         }
 
-        // GET: api/Apuestas/5
-        public Apuesta Get(int id)
+        // GET: api/Apuestas/email=idEmail
+        [Authorize(Roles = "Admin")]
+        public List<Apuesta> GetByEmail(string idEmail)
         {
-            /*var repoAp = new ApuestaRepository();
-            Apuesta ap = repoAp.Retrieve();*/
-            return null;
+            var repoAp = new ApuestaRepository();
+            List<Apuesta> apList = repoAp.RetrieveByEmail(idEmail);
+            return apList;
         }
 
         // GET: api/Apuestas?idUsuario=Email&&tipoMercado=tipoMercado
+        [Authorize(Roles = "Admin")]
         public List<ApuestaUsuario> GetApUs(string idUsuario, double tipoMercado)
         {
             var repoApUs = new ApuestaRepository();
@@ -39,7 +41,7 @@ namespace WebApiPlaceMyBet.Controllers
         public List<ApuestaMercado> GetAp(string idUsuario, string idMercado)
         {
             var repoApMe = new ApuestaRepository();
-            List<ApuestaMercado> apuestas = repoApMe.RetrieveApuestasMercado(idUsuario, idMercado);
+            List<ApuestaMercado> apuestas = repoApMe.RetrieveApuestasMercado(idUsuario,idMercado);
             return apuestas;
         }
 
