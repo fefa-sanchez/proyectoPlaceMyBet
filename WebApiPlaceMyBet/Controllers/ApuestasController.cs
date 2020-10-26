@@ -44,6 +44,7 @@ namespace WebApiPlaceMyBet.Controllers
         }
 
         // POST: api/Apuestas
+        [Authorize]
         public void Post([FromBody]Apuesta apuesta)
         {
             //Update Apuestas

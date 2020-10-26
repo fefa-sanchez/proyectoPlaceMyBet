@@ -179,8 +179,8 @@ namespace WebApiPlaceMyBet.Models
                 //TODO: Si retorna más que uno, devuelve error?
                 while (res.Read())
                 {
-                    Debug.WriteLine("Recuperado: " + res.GetInt32(0), res.GetString(1) + " " + res.GetFloat(2) + " " + res.GetFloat(3) + " " + res.GetFloat(4));
-                    sc = new SumaApuestas(res.GetInt32(0), res.GetString(1), res.GetFloat(2), res.GetFloat(3), res.GetFloat(4));
+                    Debug.WriteLine("Recuperado: " + res.GetString(01) + " " + res.GetFloat(1) + " " + res.GetFloat(2) + " " + res.GetFloat(3));
+                    sc = new SumaApuestas(res.GetString(0), res.GetFloat(1), res.GetFloat(2), res.GetFloat(3));
                 }
 
                 con.Close();
@@ -197,15 +197,14 @@ namespace WebApiPlaceMyBet.Models
 
         internal void Save(Apuesta ap)
         {
-            MySqlConnection con = null;// Connect();
+            MySqlConnection con = Connect();
             MySqlCommand command = con.CreateCommand();
 
             /*command.CommandText = "INSERT INTO apuestas (idApuesta,idUsuario, idMercado, tipoApuesta, dineroApostado, fecha) VALUES ('"
                 + ap.IdUsuario + "','" + ap.IdMercado + "','" + ap.TipoApuesta + "','" + ap.DineroApostado + "','" + ap.FechaApuesta + "')";*/
             command.CommandText = "INSERT INTO apuestas (idUsuario, idMercado, tipoApuesta, dineroApostado, fecha) " +
-                                   "VALUES(@IdApuesta,@IdUsuario, @IdMercado, @TipoApuesta, @DineroApostado, @FechaApuesta);";
+                                   "VALUES(@IdUsuario, @IdMercado, @TipoApuesta, @DineroApostado, @FechaApuesta);";
 
-            command.Parameters.AddWithValue("idApuesta", ap.IdApuesta);
             command.Parameters.AddWithValue("idUsuario", ap.IdUsuario);
             command.Parameters.AddWithValue("idMercado", ap.IdMercado);
             command.Parameters.AddWithValue("tipoApuesta", ap.TipoApuesta);
