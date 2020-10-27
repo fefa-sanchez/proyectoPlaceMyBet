@@ -7,8 +7,9 @@ namespace WebApiPlaceMyBet.Models
 {
     public class Apuesta
     {
-        public Apuesta(string idUsuario, string idMercado, string tipoApuesta, double dineroApostado, DateTime fechaApuesta)
+        public Apuesta(int idApuesta,  string idUsuario, string idMercado, string tipoApuesta, double dineroApostado, DateTime fechaApuesta)
         {
+            IdApuesta = idApuesta;
             IdUsuario = idUsuario;
             IdMercado = idMercado;
             TipoApuesta = tipoApuesta;
@@ -16,6 +17,7 @@ namespace WebApiPlaceMyBet.Models
             FechaApuesta = fechaApuesta;
         }
 
+        public int IdApuesta { get; set; }
         public string IdUsuario { get; set; }
         public string IdMercado { get; set; }
         public string TipoApuesta { get; set; }
@@ -37,6 +39,12 @@ namespace WebApiPlaceMyBet.Models
             FechaApuesta = fechaApuesta;
         }
 
+        public ApuestaDTO(int idApuesta, string idUsuario, double tipoMercado, string tipoApuesta, float cuotaUnder, float cuotaOver, double dineroApostado, DateTime fechaApuesta)
+            : this(idUsuario,tipoMercado,tipoApuesta,cuotaUnder,cuotaOver,dineroApostado,fechaApuesta)
+        {
+            IdApuesta = idApuesta;           
+        }
+        public int IdApuesta { get; set; }
         public string IdUsuario { get; set; }
         public double TipoMercado { get; set; }
         public string TipoApuesta { get; set; }
@@ -63,4 +71,5 @@ namespace WebApiPlaceMyBet.Models
         public float TotalOver { get; set; }
         public float TotalUnder { get; set; }
     }
+
 }

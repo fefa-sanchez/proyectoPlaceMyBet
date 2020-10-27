@@ -11,12 +11,6 @@ namespace WebApiPlaceMyBet.Controllers
     public class ApuestasController : ApiController
     {
         // GET: api/Apuestas
-        public IEnumerable<Apuesta> Get()
-        {
-            var repoApuesta = new ApuestaRepository();
-            List<Apuesta> apuestas = repoApuesta.Retrieve();
-            //List<ApuestaDTO> apuestas = repoApuesta.RetrieveDTO();
-
         public IEnumerable<ApuestaDTO> Get()
         {
             var repoApuesta = new ApuestaRepository();
@@ -25,16 +19,34 @@ namespace WebApiPlaceMyBet.Controllers
             return apuestas;
         }
 
-        // GET: api/Apuestas/5
-        public Apuesta Get(int id)
+        // GET: api/Apuestas/email=idEmail
+        [Authorize(Roles = "Admin")]
+        public List<Apuesta> GetByEmail(string idEmail)
         {
-            /*var repoAp = new ApuestaRepository();
-            Apuesta ap = repoAp.Retrieve();*/
-            return null;
+            var repoAp = new ApuestaRepository();
+            List<Apuesta> apList = repoAp.RetrieveByEmail(idEmail);
+            return apList;
+        }
+
+        // GET: api/Apuestas?idUsuario=Email&&tipoMercado=tipoMercado
+        [Authorize(Roles = "Admin")]
+        public List<ApuestaUsuario> GetApUs(string idUsuario, double tipoMercado)
+        {
+            var repoApUs = new ApuestaRepository();
+            List<ApuestaUsuario> apuestas = repoApUs.RetrieveApuestasUsuario(idUsuario, tipoMercado);
+            return apuestas;
+        }
+
+        // GET: api/Apuestas?idUsuario=Email&&idMercado=idMercado
+        public List<ApuestaMercado> GetAp(string idUsuario, string idMercado)
+        {
+            var repoApMe = new ApuestaRepository();
+            List<ApuestaMercado> apuestas = repoApMe.RetrieveApuestasMercado(idUsuario,idMercado);
+            return apuestas;
         }
 
         // POST: api/Apuestas
-        
+        [Authorize]
         public void Post([FromBody]Apuesta apuesta)
         {
             //Update Apuestas

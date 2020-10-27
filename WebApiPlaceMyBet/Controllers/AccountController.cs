@@ -17,7 +17,7 @@ using WebApiPlaceMyBet.Models;
 using WebApiPlaceMyBet.Providers;
 using WebApiPlaceMyBet.Results;
 
-/*namespace WebApiPlaceMyBet.Controllers
+namespace WebApiPlaceMyBet.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
@@ -125,7 +125,7 @@ using WebApiPlaceMyBet.Results;
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -258,9 +258,9 @@ using WebApiPlaceMyBet.Results;
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -368,7 +368,7 @@ using WebApiPlaceMyBet.Results;
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }
@@ -491,4 +491,4 @@ using WebApiPlaceMyBet.Results;
 
         #endregion
     }
-}*/
+}

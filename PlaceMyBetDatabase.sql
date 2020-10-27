@@ -31,16 +31,18 @@ DROP TABLE IF EXISTS `apuestas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `apuestas` (
+  `idApuesta` int NOT NULL AUTO_INCREMENT,
   `idUsuario` varchar(50) NOT NULL,
   `idMercado` varchar(10) NOT NULL,
   `tipoApuesta` char(5) NOT NULL,
   `dineroApostado` decimal(10,2) NOT NULL,
   `fecha` date DEFAULT NULL,
-  PRIMARY KEY (`idUsuario`,`idMercado`),
-  KEY `mercado` (`idMercado`),
-  CONSTRAINT `apuestas_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idEmail`) ON UPDATE CASCADE,
-  CONSTRAINT `apuestas_ibfk_2` FOREIGN KEY (`idMercado`) REFERENCES `mercados` (`idMercado`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`idApuesta`),
+  KEY `mercados_idMercado_idx` (`idMercado`),
+  KEY `fk_usuarios_idUsuario_idx` (`idUsuario`),
+  CONSTRAINT `fk_mercados_idMercado` FOREIGN KEY (`idMercado`) REFERENCES `mercados` (`idMercado`),
+  CONSTRAINT `fk_usuarios_idUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idEmail`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +51,7 @@ CREATE TABLE `apuestas` (
 
 LOCK TABLES `apuestas` WRITE;
 /*!40000 ALTER TABLE `apuestas` DISABLE KEYS */;
-INSERT INTO `apuestas` VALUES ('fefa.marino@hotmail.com','VM_1.5','Under',40.00,'2021-05-27'),('fefa.marino@hotmail.com','VM_2.5','Over',92.00,'2021-05-20'),('fefa.marino@hotmail.com','VM_3.5','Under',27.00,'2021-05-27'),('fernandezleonardo@yahoo.com','BB_2.5','Under',40.00,'2021-06-03'),('fernandezleonardo@yahoo.com','VM_1.5','Over',15.00,'2021-06-07'),('fernandezleonardo@yahoo.com','VM_3.5','Over',50.00,'2021-06-04'),('fernandezleonardo@yahoo.com','ZAM_1.5','Under',100.00,'2021-04-15'),('player1951@gmail.com','VM_3.5','Under',60.00,'2021-05-19'),('player1951@gmail.com','ZAM_1.5','Over',80.00,'2021-04-27');
+INSERT INTO `apuestas` VALUES (1,'fefa.marino@hotmail.com','VM_1.5','Under',40.00,'2021-05-27'),(2,'fefa.marino@hotmail.com','VM_2.5','Over',92.00,'2021-05-20'),(3,'fefa.marino@hotmail.com','VM_3.5','Under',27.00,'2021-05-27'),(4,'fernandezleonardo@yahoo.com','BB_2.5','Under',40.00,'2021-06-03'),(5,'fernandezleonardo@yahoo.com','VM_1.5','Over',15.00,'2021-06-07'),(6,'fernandezleonardo@yahoo.com','VM_3.5','Over',50.00,'2021-06-04'),(7,'fernandezleonardo@yahoo.com','ZAM_1.5','Under',100.00,'2021-04-15'),(8,'player1951@gmail.com','VM_3.5','Under',60.00,'2021-05-19'),(9,'player1951@gmail.com','ZAM_1.5','Over',80.00,'2021-04-27');
 /*!40000 ALTER TABLE `apuestas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,4 +148,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-25  2:39:46
+-- Dump completed on 2020-10-26 11:27:26
