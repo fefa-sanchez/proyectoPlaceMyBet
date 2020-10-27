@@ -74,6 +74,8 @@ namespace WebApiPlaceMyBet.Controllers
             //Update Mercado
             new MercadoRepository().UpdateCuotas(new MercadoCuotasDTO(idMercado, cuotaUnder, cuotaOver));
 
+        public void Post([FromBody]string value)
+        {
         }
 
         // PUT: api/Apuestas/5
