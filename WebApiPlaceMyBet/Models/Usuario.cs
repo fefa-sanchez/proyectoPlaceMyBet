@@ -31,7 +31,7 @@ namespace WebApiPlaceMyBet.Models
 
     }
 
-   /* public class UsuarioDTO
+    public class UsuarioDTO
     {
         public UsuarioDTO(string idEmail, string nombre, string apellido, int edad, double saldoActual)
         {
@@ -47,5 +47,5 @@ namespace WebApiPlaceMyBet.Models
         public string Apellido { get; set; }
         public int Edad { get; set; }
         public double SaldoActual { get; set; }
-    }*/
+    }
 }
