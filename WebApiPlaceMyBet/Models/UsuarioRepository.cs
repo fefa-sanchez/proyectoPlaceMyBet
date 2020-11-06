@@ -52,7 +52,7 @@ namespace WebApiPlaceMyBet.Models
             }
         }
 
-        /*internal List<UsuarioDTO> RetrieveDTO()
+        internal List<UsuarioDTO> RetrieveDTO()
         {
 
             MySqlConnection con = Connect();
@@ -83,7 +83,7 @@ namespace WebApiPlaceMyBet.Models
                 Debug.WriteLine("Se ha producido un error de conexión.");
                 return null;
             }
-        }*/
+        }
 
         internal void Save(Usuario u)
         {
