@@ -49,6 +49,11 @@ namespace WebApiPlaceMyBet.Models
 
         }
 
+        internal MercadoExamen RetrieveMercadoExamen()
+        {
+            throw new NotImplementedException();
+        }
+
         internal List<MercadoDTO> RetrieveDTO()
         {
 
@@ -107,6 +112,44 @@ namespace WebApiPlaceMyBet.Models
 
                 con.Close();
                 return m;
+            }
+
+            catch (MySqlException e)
+            {
+                Debug.WriteLine("Se ha producido un error de conexión.");
+                return null;
+            }
+
+        }
+
+        //Ejercicio 1
+        internal MercadoExamen RetrieveMercadoExamen(string idEventos, string tipoApuesta, decimal cantidad, string equipoLocal, string equipoVisitante)
+        {
+
+            MySqlConnection con = Connect();
+            MySqlCommand command = con.CreateCommand();
+            command.CommandText = "select em.idEventos, ap.tipoApuesta, MAX(ap.dineroApostado) as cantidad, em.equipoLocal, em.equipoVisitante" +
+                "from eventoMercado em" +
+                "inner join apuestas ap" +
+                "on em.idMercado = ap.idMercado" +
+                "where em.idEventos=@idEventos;";
+            command.Parameters.AddWithValue("@idEventos", idEventos);
+
+            try
+            {
+                con.Open();
+                MySqlDataReader res = command.ExecuteReader();
+
+                MercadoExamen me = null;
+                while (res.Read())
+                {
+                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(1) + " " + res.GetDecimal(2) + " " + res.GetString(3) + " " + res.GetString(4));
+                    me = new MercadoExamen(res.GetString(0), res.GetString(1), res.GetDecimal(2), res.GetString(3), res.GetString(4));
+
+                }
+
+                con.Close();
+                return me;
             }
 
             catch (MySqlException e)

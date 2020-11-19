@@ -26,11 +26,12 @@ namespace WebApiPlaceMyBet.Controllers
             return null;
         }
 
+        //ejercicio 2
         // POST: api/Eventos
-        public void Post([FromBody] Evento evento)
+        public void Post([FromBody] EventoExamen evento)
         {
             var repoEvento = new EventoRepository();
-            repoEvento.Save(evento);
+            repoEvento.SaveExamen(evento);
 
         }
 
