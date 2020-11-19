@@ -26,6 +26,7 @@ namespace WebApiPlaceMyBet.Controllers
             return null;
         }
 
+        //ejercicio 2
         // POST: api/Eventos
         public void Post([FromBody] EventoExamen evento)
         {

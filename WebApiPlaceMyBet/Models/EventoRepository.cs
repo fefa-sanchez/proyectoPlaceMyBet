@@ -82,18 +82,18 @@ namespace WebApiPlaceMyBet.Models
         }
 
         //ejercicio 2
-        internal void SaveExamen(EventoExamen ev)
+        internal void SaveExamen(EventoExamen ee)
         {
             MySqlConnection con = Connect();
             MySqlCommand command = con.CreateCommand();
 
             command.CommandText = "insert into inserirApuesta (equipoLocal, equipoVisitante, tipoMercado, dineroApostado)" +
-                                    "values(@equipoLocal, @equipoVisitante, @tipoMercado, @dineroApostado); ";
+                                    "values(@equipoLocal, @equipoVisitante, @tipoMercado, @dineroApostado);";
 
-            command.Parameters.AddWithValue("equipoLocal", EquipoLocal);
-            command.Parameters.AddWithValue("equipoVisitante", EquipoVisitante);
-            command.Parameters.AddWithValue("tipoMercado", TipoMercado);
-            command.Parameters.AddWithValue("dineroApostado", DineroApostado)
+            command.Parameters.AddWithValue("equipoLocal", ee.EquipoLocal);
+            command.Parameters.AddWithValue("equipoVisitante", ee.EquipoVisitante);
+            command.Parameters.AddWithValue("tipoMercado", ee.TipoMercado);
+            command.Parameters.AddWithValue("dineroApostado", ee.DineroApostado);
 
             Debug.WriteLine("comando " + command.CommandText);
 
