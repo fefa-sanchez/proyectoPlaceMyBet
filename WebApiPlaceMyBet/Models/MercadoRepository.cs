@@ -123,7 +123,7 @@ namespace WebApiPlaceMyBet.Models
         }
 
         //Ejercicio 1
-        internal Mercado RetrieveMercadoExamen(string tipoApuesta, decimal cantidad, string equipoLocal, string equipoVisitante)
+        internal MercadoExamen RetrieveMercadoExamen(string tipoApuesta, decimal cantidad, string equipoLocal, string equipoVisitante)
         {
 
             MySqlConnection con = Connect();
