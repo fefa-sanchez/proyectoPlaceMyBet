@@ -123,17 +123,17 @@ namespace WebApiPlaceMyBet.Models
         }
 
         //Ejercicio 1
-        internal MercadoExamen RetrieveMercadoExamen(string tipoApuesta, decimal cantidad, string equipoLocal, string equipoVisitante)
+        internal MercadoExamen RetrieveMercadoExamen(string idEventos, string tipoApuesta, decimal cantidad, string equipoLocal, string equipoVisitante)
         {
 
             MySqlConnection con = Connect();
             MySqlCommand command = con.CreateCommand();
-            command.CommandText = "select ap.tipoApuesta, MAX(ap.dineroApostado) as cantidad, eventos.equipoLocal, eventos.equipoVisitante" +
-                                    "from apuestas ap" +
-                                    "inner join (select m.idMercado, ev.idEventos, ev.equipoLocal, ev.equipoVisitante" +
-                                                    "from mercados m inner join eventos ev " +
-                                                    "on m.idEvento = ev.idEventos) as eventos" +
-                                    "on eventos.idMercado = ap.idMercado;";
+            command.CommandText = "select em.idEventos, ap.tipoApuesta, MAX(ap.dineroApostado) as cantidad, em.equipoLocal, em.equipoVisitante" +
+                "from eventoMercado em" +
+                "inner join apuestas ap" +
+                "on em.idMercado = ap.idMercado" +
+                "where em.idEventos=@idEventos;";
+            command.Parameters.AddWithValue("@idEventos", idEventos);
 
             try
             {
@@ -143,8 +143,8 @@ namespace WebApiPlaceMyBet.Models
                 MercadoExamen me = null;
                 while (res.Read())
                 {
-                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetDecimal(1) + " " + res.GetString(2) + " " + res.GetString(3));
-                    me = new MercadoExamen(res.GetString(0), res.GetDecimal(1), res.GetString(2), res.GetString(3));
+                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(1) + " " + res.GetDecimal(2) + " " + res.GetString(3) + " " + res.GetString(4));
+                    me = new MercadoExamen(res.GetString(0), res.GetString(1), res.GetDecimal(2), res.GetString(3), res.GetString(4));
 
                 }
 

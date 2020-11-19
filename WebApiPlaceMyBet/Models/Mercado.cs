@@ -56,14 +56,16 @@ namespace WebApiPlaceMyBet.Models
 
     public class MercadoExamen
     {
-        public MercadoExamen(string tipoApuesta, decimal cantidad, string equipoLocal, string equipoVisitante)
+        public MercadoExamen(string idEventos, string tipoApuesta, decimal cantidad, string equipoLocal, string equipoVisitante)
         {
+            IdEventos = idEventos;
             TipoApuesta = tipoApuesta;
             Cantidad = cantidad;
             EquipoLocal = equipoLocal;
             EquipoVisitante = equipoVisitante;
         }
 
+        public string IdEventos { get; set; }
         public string TipoApuesta { get; set; }
         public decimal Cantidad { get; set; }
         public string EquipoLocal { get; set; }
