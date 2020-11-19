@@ -20,7 +20,7 @@ namespace WebApiPlaceMyBet.Controllers
         public MercadoExamen Get(string idEventos)
         {
             var repoMercado = new MercadoRepository();
-            List<MercadoExamen> mercados = repoMercado.RetrieveMercadoExamen();
+            MercadoExamen mercados = repoMercado.RetrieveMercadoExamen();
             return mercados;
         }
 
