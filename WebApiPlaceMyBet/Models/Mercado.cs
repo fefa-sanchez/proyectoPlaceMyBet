@@ -53,4 +53,23 @@ namespace WebApiPlaceMyBet.Models
         public double CuotaOver { get; set; }
 
     }
+
+    public class MercadoExamen
+    {
+        public MercadoExamen(string idEventos, string tipoApuesta, decimal cantidad, string equipoLocal, string equipoVisitante)
+        {
+            IdEventos = idEventos;
+            TipoApuesta = tipoApuesta;
+            Cantidad = cantidad;
+            EquipoLocal = equipoLocal;
+            EquipoVisitante = equipoVisitante;
+        }
+
+        public string IdEventos { get; set; }
+        public string TipoApuesta { get; set; }
+        public decimal Cantidad { get; set; }
+        public string EquipoLocal { get; set; }
+        public string EquipoVisitante { get; set; }
+
+    }
 }

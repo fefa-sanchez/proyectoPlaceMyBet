@@ -117,6 +117,44 @@ namespace WebApiPlaceMyBet.Models
 
         }
 
+        //Ejercicio 1
+        internal Mercado RetrieveMercadoExamen(string tipoApuesta, decimal cantidad, string equipoLocal, string equipoVisitante)
+        {
+
+            MySqlConnection con = Connect();
+            MySqlCommand command = con.CreateCommand();
+            command.CommandText = "select eventos.idEventos, ap.tipoApuesta, MAX(ap.dineroApostado) as cantidad, eventos.equipoLocal, eventos.equipoVisitante" +
+                                    "from apuestas ap" +
+                                    "inner join (select m.idMercado, ev.idEventos, ev.equipoLocal, ev.equipoVisitante" +
+                                                    "from mercados m inner join eventos ev " +
+                                                    "on m.idEvento = ev.idEventos) as eventos" +
+                                    "on eventos.idMercado = ap.idMercado;";
+
+            try
+            {
+                con.Open();
+                MySqlDataReader res = command.ExecuteReader();
+
+                MercadoExamen me = null;
+                while (res.Read())
+                {
+                    Debug.WriteLine("Recuperado: " + res.GetString(0) + " " + res.GetString(1) + " " + res.GetDecimal(2) + " " + res.GetString(3) + " " + res.GetString(4));
+                    me = new MercadoExamen(res.GetString(1), res.GetDecimal(2), res.GetString(3), res.GetString(4));
+
+                }
+
+                con.Close();
+                return me;
+            }
+
+            catch (MySqlException e)
+            {
+                Debug.WriteLine("Se ha producido un error de conexión.");
+                return null;
+            }
+
+        }
+
         internal void Save(Mercado m)
         {
             MySqlConnection con = Connect();
