@@ -81,6 +81,29 @@ namespace WebApiPlaceMyBet.Models
             }
         }
 
+        //ejercicio 2
+        internal void SaveExamen(Evento ev)
+        {
+            MySqlConnection con = Connect();
+            MySqlCommand command = con.CreateCommand();
+
+            command.CommandText = "select ie.equipoLocal, ie.equipoVisitante, ie.tipoMercado, ap.dineroApostado" +
+                                    "from inserirEvento ie inner join apuestas ap" +
+                                    "on ie.idMercado = ap.idMercado;";
+
+            Debug.WriteLine("comando " + command.CommandText);
+
+            try
+            {
+                con.Open();
+                command.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (MySqlException e)
+            {
+                Debug.WriteLine("Se ha producido un error de conexión.");
+            }
+        }
         internal void Save(Evento ev)
         {
             MySqlConnection con = Connect();
