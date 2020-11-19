@@ -16,6 +16,7 @@ namespace WebApiPlaceMyBet.Controllers
             return new string[] { "value1", "value2" };
         }
 
+        //Ejercicio 1
         // GET: api/MercadosExamen/5
         public MercadoExamen Get(string idEventos)
         {
