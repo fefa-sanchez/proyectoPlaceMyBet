@@ -34,4 +34,19 @@ namespace WebApiPlaceMyBet.Models
         public string EquipoVisitante { get; set; }
         public DateTime FechaEvento { get; set; }
     }
+    public class EventoExamen
+    {
+        public EventoExamen(string equipoLocal, string equipoVisitante, double tipoMercado, decimal dineroApostado)
+        {
+            EquipoLocal = equipoLocal;
+            EquipoVisitante = equipoVisitante;
+            TipoMercado = tipoMercado;
+            DineroApostado = dineroApostado;
+        }
+
+        public string EquipoLocal { get; set; }
+        public string EquipoVisitante { get; set; }
+        public double TipoMercado { get; set; }
+        public decimal DineroApostado { get; set; }
+    }
 }
